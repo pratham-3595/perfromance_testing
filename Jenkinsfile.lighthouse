@@ -19,7 +19,7 @@ pipeline {
             steps {
                 dir('Front End Performance/LightHouse') {
                     withEnv(["LOOPS=${params.LOOPS}", "TARGET_URL=${params.TARGET_URL}"]) {
-                        bat 'node run-lighthouse.js'
+                        bat 'node src\\runners\\run-lighthouse.js.js'
                     }
                 }
             }
