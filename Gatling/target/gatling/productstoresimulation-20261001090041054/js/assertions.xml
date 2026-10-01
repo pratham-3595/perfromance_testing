@@ -1,0 +1,8 @@
+<testsuite name="simulations.ProductStoreSimulation" tests="2" errors="0" failures="2" time="0">
+<testcase name="Global: percentage of failed events is less than 1.0" status="false" time="0">
+  <failure type="Global">Actual value: 2.0620762449957684</failure>
+</testcase>
+<testcase name="Global: 95th percentile of response time is less than 3000.0" status="false" time="0">
+  <failure type="Global">Actual value: 4283.0</failure>
+</testcase>
+</testsuite>

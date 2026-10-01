@@ -1,0 +1,31 @@
+company,full_name,address,postal_code,city,country,state,phone,email,comment
+Acme Traders,John Smith,221B Baker Street,10001,New York,US,US_NY,2125551234,john.smith@example.com,Please deliver in the evening
+,Emily Johnson,45 Kings Road,SW3 4ND,London,GB,,2079460958,emily.johnson@example.com,
+Global Furnishings Ltd,Michael Brown,12 Rue de Rivoli,75001,Paris,FR,,142601234,michael.brown@example.com,Leave at reception
+,Sara Wilson,88 MG Road,560001,Bangalore,IN,IN_KA,9845012345,sara.wilson@example.com,Call before delivery
+Nordic Homes AB,Lucas Andersson,Storgatan 15,11122,Stockholm,SE,,86601234,lucas.andersson@example.com,
+,Olivia Martinez,Calle Mayor 22,28013,Madrid,ES,,911234567,olivia.martinez@example.com,
+Berlin Interiors GmbH,Felix Schneider,Alexanderplatz 5,10178,Berlin,DE,DE_BE,3020456789,felix.schneider@example.com,Ring the bell twice
+,Chloe Dubois,10 Avenue Louise,1050,Brussels,BE,,22345678,chloe.dubois@example.com,
+Maple Living Co,Ethan Wilson,500 Yonge Street,M4Y1X8,Toronto,CA,CA_ON,4165551234,ethan.wilson@example.com,
+,Grace Lee,77 Orchard Road,238839,Singapore,SG,,65123456,grace.lee@example.com,Business hours only
+Sunrise Interiors,Daniel Kim,150 Teheran-ro,06132,Seoul,KR,,220012345,daniel.kim@example.com,
+,Sophia Rossi,Via Roma 8,00184,Rome,IT,,0669941234,sophia.rossi@example.com,Second floor
+Harbor Living,Noah Anderson,90 Queen Street,1010,Auckland,NZ,,93001234,noah.anderson@example.com,
+,Mia Nilsson,Nygatan 3,41101,Gothenburg,SE,,31123456,mia.nilsson@example.com,
+Cedar & Co,William Davies,25 Princes Street,EH2 2AN,Edinburgh,GB,,1315551234,william.davies@example.com,Leave with neighbour
+,Amelia Garcia,Calle Sol 9,08002,Barcelona,ES,,933012345,amelia.garcia@example.com,
+Willow Trading,James Miller,300 Bourke Street,3000,Melbourne,AU,AU_VIC,393001234,james.miller@example.com,
+,Isabella Novak,Wenceslas Square 1,11000,Prague,CZ,,224001234,isabella.novak@example.com,Ring twice
+Coastal Furniture,Benjamin Clark,60 Marine Parade,4000,Brisbane,AU,AU_QLD,731234567,benjamin.clark@example.com,
+,Ava Kowalski,Nowy Świat 20,00029,Warsaw,PL,,224561234,ava.kowalski@example.com,
+Terra Home Ltd,Lucas Silva,Avenida Paulista 100,01310,Sao Paulo,BR,BR_SP,1130012345,lucas.silva@example.com,Front desk
+,Charlotte Muller,Bahnhofstrasse 5,8001,Zurich,CH,,442345678,charlotte.muller@example.com,
+Oakridge Supplies,Henry Walker,12 Grafton Street,D02,Dublin,IE,,16123456,henry.walker@example.com,
+,Emma Larsen,Bredgade 10,1260,Copenhagen,DK,,33123456,emma.larsen@example.com,
+Pinewood Traders,Alexander Petrov,Tverskaya 7,125009,Moscow,RU,,4956001234,alexander.petrov@example.com,
+,Zoe Papadopoulos,Ermou Street 15,10563,Athens,GR,,2103601234,zoe.papadopoulos@example.com,Leave at door
+Meridian Home Co,Samuel Turner,88 Orchard Road,238839,Singapore,SG,,65129876,samuel.turner@example.com,
+,Lily Chen,168 Nanjing Road,200003,Shanghai,CN,,2163001234,lily.chen@example.com,
+Falcon Interiors,David Johansson,Kungsgatan 20,11143,Stockholm,SE,,86612345,david.johansson@example.com,
+,Hannah Schmidt,Friedrichstrasse 100,10117,Berlin,DE,DE_BE,3020987654,hannah.schmidt@example.com,Buzzer code 4521

@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    options { timestamps(); timeout(time: 40, unit: 'MINUTES') }
+    parameters {
+        string(name: 'THREADS',  defaultValue: '5',   description: 'Virtual users (3-5)')
+        string(name: 'DURATION', defaultValue: '600', description: 'Test duration, seconds (10 min)')
+    }
+    environment {
+        JMETER_HOME = 'C:\\apache-jmeter-5.6.3'   // <-- change to your JMeter path
+    }
+    stages {
+        stage('Clean') {
+            steps {
+                dir('Jmeter') {
+                    bat 'if exist report rmdir /s /q report'
+                    bat 'if exist run.jtl del /q run.jtl'
+                }
+            }
+        }
+        stage('Run JMeter') {
+            steps {
+                dir('Jmeter') {   // run from this folder so the relative path to "CSV Data.csv" works
+                    bat "\"%JMETER_HOME%\\bin\\jmeter.bat\" -n -t \"Test Plan.jmx\" -l run.jtl -e -o report -Jthreads=${params.THREADS} -Jduration=${params.DURATION}"
+                }
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'Jmeter/report/**, Jmeter/run.jtl', allowEmptyArchive: true
+        }
+    }
+}
+ 

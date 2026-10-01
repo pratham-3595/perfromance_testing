@@ -1,0 +1,33 @@
+
+pipeline {
+    agent any
+    options { timestamps(); timeout(time: 30, unit: 'MINUTES') }
+    parameters {
+        string(name: 'LOOPS', defaultValue: '1', description: 'Loops of the script')
+    }
+    stages {
+        stage('Install deps') {
+            steps {
+                dir('Front End Performance/LightHouse') {
+                    bat 'npm ci'
+                }
+            }
+        }
+        stage('Run Lighthouse') {
+            steps {
+                dir('Front End Performance/LightHouse') {
+                    // LOOPS passed as env var; read it in lighthouse-e2e.js via process.env.LOOPS
+                    withEnv(["LOOPS=${params.LOOPS}"]) {
+                        bat 'node lighthouse-e2e.js'
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'Front End Performance/LightHouse/results/**', allowEmptyArchive: true
+        }
+    }
+}
+ 

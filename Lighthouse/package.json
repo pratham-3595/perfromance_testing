@@ -1,0 +1,17 @@
+{
+  "name": "lighthouse-puppeteer",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "clean": "node -e \"import('node:fs').then(fs=>fs.rmSync('results',{recursive:true,force:true}))\"",
+    "lh:order": "node src/runners/run-lighthouse.js",
+    "lh:order:clean": "npm run clean && npm run lh:order"
+  },
+  "dependencies": {
+    "chrome-launcher": "^1.2.1",
+    "dotenv": "^17.4.2",
+    "lighthouse": "^13.4.1",
+    "puppeteer": "^25.10.0",
+    "puppeteer-cluster": "^0.25.0"
+  }
+}

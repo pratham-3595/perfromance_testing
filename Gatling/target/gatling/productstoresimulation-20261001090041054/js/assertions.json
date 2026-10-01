@@ -1,0 +1,27 @@
+{
+  "simulation": "simulations.ProductStoreSimulation",
+  "simulationId": "productstoresimulation-20261001090041054",
+  "start": 1790845241942,
+  "description": "",
+  "scenarios": ["Product Store - Capacity Test"],
+  "assertions": [
+{
+  "path": "Global",
+  "target": "percentage of failed events",
+  "condition": "is less than",
+  "expectedValues": [1.0],
+  "result": false,
+  "message": "Global: percentage of failed events is less than 1.0",
+  "actualValue": [2.0620762449957684]
+},
+{
+  "path": "Global",
+  "target": "95th percentile of response time",
+  "condition": "is less than",
+  "expectedValues": [3000.0],
+  "result": false,
+  "message": "Global: 95th percentile of response time is less than 3000.0",
+  "actualValue": [4283.0]
+}
+  ]
+}
