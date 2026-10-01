@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Install deps') {
             steps {
-                dir('Front End Performance/LightHouse') {
+                dir('Lighthouse') {
                     bat 'dir'
                     bat 'node -v'
                     bat 'npm ci'
@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Run Lighthouse') {
             steps {
-                dir('Front End Performance/LightHouse') {
+                dir('Lighthouse') {
                     withEnv(["LH_RUNS=${params.LOOPS}", "APP_URL=${params.TARGET_URL}"]) {
                         bat 'node src\\runners\\run-lighthouse.js'
                     }
@@ -27,7 +27,7 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: 'Front End Performance/LightHouse/results/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'Lighthouse/results/**', allowEmptyArchive: true
         }
     }
 }
