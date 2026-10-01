@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    options { timestamps(); timeout(time: 40, unit: 'MINUTES') }
+    parameters {
+        string(name: 'BASE_URL', defaultValue: 'http://localhost', description: 'App under test')
+        string(name: 'USERS',    defaultValue: '5',   description: 'Virtual users (3-5)')
+        string(name: 'RAMP',     defaultValue: '30',  description: 'Ramp-up, seconds')
+        string(name: 'DURATION', defaultValue: '600', description: 'Test duration, seconds (10 min)')
+        choice(name: 'MODEL', choices: ['closed', 'open'], description: 'Load model')
+    }
+    stages {
+        stage('Run Gatling') {
+            steps {
+                dir('Gatling') {
+                    // -Dduration only works if ShopSimulation reads it (see notes)
+                    bat "mvn -B clean gatling:test -DbaseUrl=${params.BASE_URL} -Dusers=${params.USERS} -DrampSeconds=${params.RAMP} -Dduration=${params.DURATION} -Dmodel=${params.MODEL}"
+                }
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'Gatling/target/gatling/**', allowEmptyArchive: true
+        }
+    }
+}
