@@ -18,8 +18,8 @@ pipeline {
         stage('Run Lighthouse') {
             steps {
                 dir('Front End Performance/LightHouse') {
-                    withEnv(["LOOPS=${params.LOOPS}", "TARGET_URL=${params.TARGET_URL}"]) {
-                        bat 'node src\\runners\\run-lighthouse.js.js'
+                    withEnv(["LH_RUNS=${params.LOOPS}", "APP_URL=${params.TARGET_URL}"]) {
+                        bat 'node src\\runners\\run-lighthouse.js'
                     }
                 }
             }
