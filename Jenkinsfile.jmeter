@@ -20,7 +20,7 @@ pipeline {
         stage('Run JMeter') {
             steps {
                 dir('Jmeter') {   // run from this folder so the relative path to "CSV Data.csv" works
-                    bat "\"%JMETER_HOME%\\bin\\jmeter.bat\" -n -t \"Test Plan.jmx\" -l run.jtl -e -o report -Jthreads=${params.THREADS} -Jduration=${params.DURATION}"
+                    bat "\"%JMETER_HOME%\\bin\\jmeter.bat\" -n -t \"furniture_store_test-plan.jmx\" -l run.jtl -e -o report -Jthreads=${params.THREADS} -Jduration=${params.DURATION}"
                 }
             }
         }
