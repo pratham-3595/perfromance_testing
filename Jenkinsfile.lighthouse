@@ -1,14 +1,16 @@
-
 pipeline {
     agent any
     options { timestamps(); timeout(time: 30, unit: 'MINUTES') }
     parameters {
         string(name: 'LOOPS', defaultValue: '1', description: 'Loops of the script')
+        string(name: 'TARGET_URL', defaultValue: 'http://localhost', description: 'Site to audit')
     }
     stages {
         stage('Install deps') {
             steps {
                 dir('Front End Performance/LightHouse') {
+                    bat 'dir'
+                    bat 'node -v'
                     bat 'npm ci'
                 }
             }
@@ -16,8 +18,7 @@ pipeline {
         stage('Run Lighthouse') {
             steps {
                 dir('Front End Performance/LightHouse') {
-                    // LOOPS passed as env var; read it in lighthouse-e2e.js via process.env.LOOPS
-                    withEnv(["LOOPS=${params.LOOPS}"]) {
+                    withEnv(["LOOPS=${params.LOOPS}", "TARGET_URL=${params.TARGET_URL}"]) {
                         bat 'node run-lighthouse.js'
                     }
                 }
@@ -30,4 +31,3 @@ pipeline {
         }
     }
 }
- 
