@@ -18,7 +18,7 @@ pipeline {
                 dir('Front End Performance/LightHouse') {
                     // LOOPS passed as env var; read it in lighthouse-e2e.js via process.env.LOOPS
                     withEnv(["LOOPS=${params.LOOPS}"]) {
-                        bat 'node lighthouse-e2e.js'
+                        bat 'node run-lighthouse.js'
                     }
                 }
             }
