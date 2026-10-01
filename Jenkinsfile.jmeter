@@ -13,7 +13,7 @@ pipeline {
 
     environment {
         JMETER_HOME = 'C:\\Users\\PrathamGoswami\\apache-jmeter-5.6.3'
-        JAVA_HOME   = 'C:\\Program Files\\Java\\jdk-17'   // <-- change to your actual JDK folder
+        JAVA_HOME   = 'C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.12.7-hotspot'
     }
 
     stages {
@@ -31,7 +31,8 @@ pipeline {
                 dir('Jmeter') {   // run from this folder so the relative path to "CSV Data.csv" works
                     bat """
                     set "PATH=%JAVA_HOME%\\bin;%PATH%"
-                    java -version
+                    if not exist "%JAVA_HOME%\\bin\\java.exe" exit /b 1
+                    "%JAVA_HOME%\\bin\\java.exe" -version
                     "%JMETER_HOME%\\bin\\jmeter.bat" -n -t "furniture_store_test-plan.jmx" -l run.jtl -e -o report -Jthreads=${params.THREADS} -Jduration=${params.DURATION}
                     """
                 }
