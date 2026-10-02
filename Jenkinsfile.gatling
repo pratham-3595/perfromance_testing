@@ -16,7 +16,7 @@ pipeline {
 
     environment {
         JAVA_HOME  = 'C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.12.7-hotspot'
-        MAVEN_HOME = 'C:\\Users\\PrathamGoswami\\apache-maven-3.9.6'
+        MAVEN_HOME = 'C:\\Maven\\apache-maven-3.9.16'
     }
 
     stages {
