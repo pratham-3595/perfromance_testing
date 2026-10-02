@@ -1,0 +1,121 @@
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+        timeout(time: 90, unit: 'MINUTES')
+    }
+
+    parameters {
+        string(name: 'BASE_URL', defaultValue: 'http://localhost', description: 'Application URL')
+        string(name: 'THREADS', defaultValue: '5', description: 'JMeter virtual users')
+        string(name: 'USERS', defaultValue: '5', description: 'Gatling virtual users')
+        string(name: 'RAMP', defaultValue: '30', description: 'Gatling ramp-up seconds')
+        string(name: 'DURATION', defaultValue: '600', description: 'Test duration in seconds')
+        string(name: 'LOOPS', defaultValue: '1', description: 'Lighthouse loops')
+        choice(name: 'MODEL', choices: ['closed', 'open'], description: 'Gatling load model')
+    }
+
+    environment {
+        JAVA_HOME = 'C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.12.7-hotspot'
+        JMETER_HOME = 'C:\\Users\\PrathamGoswami\\apache-jmeter-5.6.3'
+        MAVEN_HOME = 'C:\\Maven\\apache-maven-3.9.16'
+    }
+
+    stages {
+        stage('Run JMeter') {
+            steps {
+                dir('Jmeter') {
+                    bat '''
+                        if exist report rmdir /s /q report
+                        if exist run.jtl del /q run.jtl
+
+                        set "PATH=%JAVA_HOME%\\bin;%PATH%"
+                        if not exist "%JAVA_HOME%\\bin\\java.exe" exit /b 1
+                        if not exist "%JMETER_HOME%\\bin\\jmeter.bat" exit /b 1
+
+                        "%JAVA_HOME%\\bin\\java.exe" -version
+                        "%JMETER_HOME%\\bin\\jmeter.bat" -n ^
+                          -t furniture_store_test-plan.jmx ^
+                          -l run.jtl ^
+                          -e ^
+                          -o report ^
+                          -Jthreads=%THREADS% ^
+                          -Jduration=%DURATION%
+                    '''
+                }
+            }
+        }
+
+        stage('Run Gatling') {
+            steps {
+                dir('Gatling') {
+                    bat '''
+                        set "PATH=%JAVA_HOME%\\bin;%MAVEN_HOME%\\bin;%PATH%"
+                        if not exist "%JAVA_HOME%\\bin\\java.exe" exit /b 1
+                        if not exist "%MAVEN_HOME%\\bin\\mvn.cmd" exit /b 1
+
+                        "%JAVA_HOME%\\bin\\java.exe" -version
+                        "%MAVEN_HOME%\\bin\\mvn.cmd" -version
+                        "%MAVEN_HOME%\\bin\\mvn.cmd" -B clean gatling:test ^
+                          -DbaseUrl="%BASE_URL%" ^
+                          -Dusers=%USERS% ^
+                          -DrampSeconds=%RAMP% ^
+                          -Dduration=%DURATION% ^
+                          -Dmodel=%MODEL%
+                    '''
+                }
+            }
+        }
+
+        stage('Install Lighthouse Dependencies') {
+            steps {
+                dir('Lighthouse') {
+                    bat '''
+                        node -v
+                        npm ci
+                    '''
+                }
+            }
+        }
+
+        stage('Run Lighthouse') {
+            steps {
+                dir('Lighthouse') {
+                    withEnv(["LH_RUNS=${params.LOOPS}", "APP_URL=${params.BASE_URL}"]) {
+                        bat 'node src\\runners\\run-lighthouse.js'
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: '''
+                Jmeter/report/**,
+                Jmeter/run.jtl,
+                Gatling/target/gatling/**,
+                Lighthouse/results/**
+            ''', allowEmptyArchive: true
+
+            publishHTML(target: [
+                reportDir: 'Jmeter/report',
+                reportFiles: 'index.html',
+                reportName: 'JMeter Report',
+                keepAll: true,
+                allowMissing: true,
+                alwaysLinkToLastBuild: false
+            ])
+
+            publishHTML(target: [
+                reportDir: 'Gatling/target/gatling',
+                reportFiles: '**/index.html',
+                reportName: 'Gatling Report',
+                keepAll: true,
+                allowMissing: true,
+                alwaysLinkToLastBuild: false
+            ])
+        }
+    }
+}
